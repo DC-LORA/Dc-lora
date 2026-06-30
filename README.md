@@ -9,7 +9,7 @@ DC-LoRA is a continual source-free adaptation framework for semantic segmentatio
 The pretrained and adapted checkpoints are available at the following link:
 
 ```text
-CHECKPOINT_LINK_HERE
+(https://drive.google.com/drive/folders/1nSN9s2AoaFojca579igrom5CbmHK5wUl?usp=sharing)
 ```
 
 The released checkpoints include source and adapted models used for the GTA → Cityscapes → IDD → Mapillary continual adaptation protocol.
