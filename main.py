@@ -479,6 +479,13 @@ def main():
             raise FileNotFoundError("--ckpt is required for --self_training and must point to a valid file.")
 
         checkpoint = torch.load(opts.ckpt, map_location="cpu", weights_only=False)
+        if opts.new_adapter_per_domain:
+            merged = (
+                checkpoint.get("ema_state_merged")
+                or checkpoint.get("model_state_merged")
+                or checkpoint["model_state"]
+            )
+            checkpoint = {"model_state_merged": merged}
 
         if "deeplabv2" in opts.model:
 
@@ -638,7 +645,10 @@ def main():
 
     ckpt = None
     if opts.ckpt and os.path.isfile(opts.ckpt):
-        ckpt = torch.load(opts.ckpt, map_location='cpu' , weights_only=False)
+        if opts.self_training:
+            ckpt = checkpoint
+        else:
+            ckpt = torch.load(opts.ckpt, map_location="cpu", weights_only=False)
 
         if 'deeplabv2' in opts.model:
             state = ckpt.get('model_state_merged') or ckpt.get('model_state')
@@ -831,6 +841,7 @@ def main():
         criterion = nn.CrossEntropyLoss(ignore_index=255, reduction='mean')
 
     utils.mkdir('checkpoints')
+    best_score = 0.0
     cur_itrs = 0
     cur_epochs = 0
     vis_sample_id = np.random.randint(0, len(val_loader), opts.vis_num_samples).tolist() if opts.enable_vis else None
@@ -878,6 +889,9 @@ def main():
 
                 val_score, ret_samples = validate(opts, m_eval, val_loader, device, metrics, ret_samples_ids=vis_sample_id)
                 print(metrics.to_str(val_score))
+                if val_score["Mean IoU"] > best_score:
+                    best_score = val_score["Mean IoU"]
+                    save_checkpoint(model, ema, opts, tag="best")
 
                 if opts.self_training and ema is not None:
                     ema.ema.to(device)
