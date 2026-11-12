@@ -7,7 +7,7 @@ import argparse
 import numpy as np
 import torch.nn.functional as F
 from torch.utils import data
-from datasets import VOCSegmentation, Cityscapes, GTA5
+from datasets import Cityscapes, GTA5
 from utils import ext_transforms as et
 from metrics import StreamSegMetrics
 import torch
