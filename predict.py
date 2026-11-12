@@ -14,7 +14,7 @@ from torchvision import transforms as T
 
 import network
 import utils
-from datasets import VOCSegmentation, Cityscapes
+from datasets import Cityscapes
 from metrics import StreamSegMetrics
 
 
