@@ -212,13 +212,13 @@ def get_argparser():
     parser.add_argument("--lr_policy", type=str, default='poly', choices=['poly', 'step'],
                         help="learning rate scheduler policy")
     parser.add_argument("--step_size", type=int, default=10000)
-    parser.add_argument("--crop_val", type=int, nargs=2, metavar=("H","W"),default=[512, 1024],
+    parser.add_argument("--crop_val", type=int, nargs=2, metavar=("H","W"),default=[320, 640],
        help="validation resize height and width, e.g. --val_size 512 1024")
     parser.add_argument("--batch_size", type=int, default=4,
                         help='batch size (default: 16)')
     parser.add_argument("--val_batch_size", type=int, default=6,
                         help='batch size for validation (default: 4)')
-    parser.add_argument("--crop_size", type=int, nargs=2, metavar=("H","W"),default=[512, 1024],
+    parser.add_argument("--crop_size", type=int, nargs=2, metavar=("H","W"),default=[320, 640],
       help="train crop height and width, e.g. --crop_size 768 1280")
 
     parser.add_argument("--ckpt", default=None, type=str,
