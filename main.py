@@ -205,7 +205,7 @@ def get_argparser():
     parser.add_argument("--output_stride", type=int, default=16, choices=[8, 16])
 
 
-    parser.add_argument("--total_itrs", type=int, default=20000,
+    parser.add_argument("--total_itrs", type=int, default=120000,
                         help="epoch number (default: 30k)")
     parser.add_argument("--lr", type=float,  default=2.5e-4,
                         help="learning rate (default: 0.01)")
